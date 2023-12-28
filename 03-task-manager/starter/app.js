@@ -5,10 +5,16 @@ require('dotenv').config()
 const connectDB = require('./db/connect')
 const app = express();
 const port = 3000;
+const notFound = require('./middleware/not-found')
+const errorHandlerMiddleware = require('./middleware/errorHandler')
 
 // middleware
 app.use(express.json())
 app.use('/api/v1/tasks', tasks)
+app.use(errorHandlerMiddleware)
+
+app.use(notFound)
+
 
 const start = async () => {
     try {
